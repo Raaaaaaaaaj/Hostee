@@ -19,17 +19,17 @@ import { AIDrawer } from '../../core/services/aiDrawer.service';
     >
       <div>
         <!-- Logo Header -->
-        <div class="flex items-center">
+        <div class="flex items-center justify-between py-3 px-4">
         
-        <div class="p-6 flex items-center gap-3 border-b border-[#111A2E]/30">
-          <div
+        <div class="flex items-center gap-3 border-b border-[#111A2E]/30">
+          <!-- <div
             class="w-10 h-10 rounded-2xl bg-indigo-600 flex items-center justify-center shadow-lg shadow-indigo-600/30 grow-0 shrink-0"
           >
             <i class="pi pi-building text-base text-white"></i>
-          </div>
+          </div> -->
           @if (!sidebarCollapsed()) {
             <div class="flex flex-col">
-              <span class="text-sm font-extrabold tracking-tight font-sans">GRAND LUXE</span>
+              <span class="text-sm font-extrabold tracking-tight font-sans">Hostee</span>
               <span
                 class="text-[10px] text-slate-500 font-semibold uppercase tracking-wider font-sans"
                 >PMS v2.0</span
@@ -38,7 +38,7 @@ import { AIDrawer } from '../../core/services/aiDrawer.service';
           }
         </div>
 
-        <div class="ms-5">
+        <div>
             <button 
               (click)="sidebarCollapsed.set(!sidebarCollapsed())"
               class="w-10 h-10 rounded-2xl hover:bg-slate-50 border border-slate-100 flex items-center justify-center text-slate-500 transition-colors shadow-sm"
@@ -49,7 +49,7 @@ import { AIDrawer } from '../../core/services/aiDrawer.service';
           </div>
 
         <!-- Navigation Links -->
-        <nav class="px-3 py-4 flex flex-col gap-2">
+        <nav class="px-4 py-2 flex flex-col gap-2">
           @for (item of navigationItems(); track item.route) {
             @if (hasAccess(item.roles)) {
               <a

@@ -1,13 +1,15 @@
 import { Component, inject, signal, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { ReservationsStore } from '../../core/store/reservations.store';
-import { RoomsStore } from '../../core/store/rooms.store';
-import { GuestsStore } from '../../core/store/guests.store';
-import { Reservation, ReservationStatus, Room } from '../../core/api/api.types';
-import { StatusBadgeComponent } from '../../shared/components/status-badge.component';
+import { ReservationsStore } from '../../../core/store/reservations.store';
+import { RoomsStore } from '../../../core/store/rooms.store';
+import { GuestsStore } from '../../../core/store/guests.store';
+import { Reservation, ReservationStatus, Room } from '../../../core/api/api.types';
+import { StatusBadgeComponent } from '../../../shared/components/status-badge.component';
 import { DrawerModule } from 'primeng/drawer';
 import { InputTextModule } from 'primeng/inputtext';
+import { PageHeader } from '../../../shared/components/pageheader.component';
+import { ViewMode } from '../../../shared/components/pageheaderviewswitcher.component';
 
 @Component({
   selector: 'app-reservations',
@@ -17,7 +19,8 @@ import { InputTextModule } from 'primeng/inputtext';
     FormsModule,
     StatusBadgeComponent,
     DrawerModule,
-    InputTextModule
+    InputTextModule,
+    PageHeader
   ],
   template: `
     <div class="flex flex-col gap-8 font-sans">
@@ -25,36 +28,19 @@ import { InputTextModule } from 'primeng/inputtext';
       <!-- Top Filters Banner -->
       <div class="bg-white border border-slate-100 p-6 rounded-3xl shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-4">
         
-        <!-- Search bar -->
-        <div class="relative w-full md:max-w-xs">
-          <i class="pi pi-search absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 text-sm"></i>
-          <input 
-            pInputText 
-            type="text" 
-            [(ngModel)]="searchQuery" 
-            placeholder="Search guest name or room..." 
-            class="pl-10 w-full text-xs font-medium" 
-          />
-        </div>
-
+        <!-- Page Header -->
+          <app-page-header
+            [viewMode]="viewMode()"
+            (viewModeChange)="viewMode.set($event)"
+          >
+          </app-page-header>
+        <!-- Page Header ends -->
+        
         <!-- Right: Actions & Toggles -->
         <div class="flex flex-wrap items-center gap-3">
           
           <!-- Kanban / List View Toggle -->
-          <div class="bg-slate-100 border border-slate-200/50 rounded-xl p-1 flex items-center gap-1.5 shadow-inner">
-            <button 
-              (click)="viewMode.set('kanban')"
-              class="px-3 py-1.5 rounded-lg flex items-center justify-center transition-all text-xs font-bold gap-1"
-              [ngClass]="viewMode() === 'kanban' ? 'bg-white text-slate-800 shadow-sm' : 'text-slate-400 hover:text-slate-600'">
-              <i class="pi pi-sliders-v"></i> Board
-            </button>
-            <button 
-              (click)="viewMode.set('list')"
-              class="px-3 py-1.5 rounded-lg flex items-center justify-center transition-all text-xs font-bold gap-1"
-              [ngClass]="viewMode() === 'list' ? 'bg-white text-slate-800 shadow-sm' : 'text-slate-400 hover:text-slate-600'">
-              <i class="pi pi-list"></i> List
-            </button>
-          </div>
+          
 
           <!-- Add Booking CTA Stepper Drawer -->
           <button 
@@ -325,14 +311,14 @@ import { InputTextModule } from 'primeng/inputtext';
       </p-drawer>
 
     </div>
-  `
+  `,
 })
 export class ReservationsComponent {
   readonly reservationsStore = inject(ReservationsStore);
   readonly roomsStore = inject(RoomsStore);
   readonly guestsStore = inject(GuestsStore);
 
-  readonly viewMode = signal<'kanban' | 'list'>('kanban');
+  readonly viewMode = signal<ViewMode>('kanban');
   readonly stepperVisible = signal(false);
   readonly activeStep = signal(1);
 

@@ -21,7 +21,7 @@ export const routes: Routes = [
       },
       {
         path: 'reservations',
-        loadComponent: () => import('./features/reservations/reservations.component').then(m => m.ReservationsComponent)
+        loadComponent: () => import('./features/reservations/pages/reservations.component').then(m => m.ReservationsComponent)
       },
       {
         path: 'guests',
