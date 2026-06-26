@@ -10,7 +10,6 @@ import { DrawerModule } from 'primeng/drawer';
 import { InputTextModule } from 'primeng/inputtext';
 import { PageHeader } from '../../../shared/components/pageheader.component';
 import { ViewMode } from '../../../shared/components/pageheaderviewswitcher.component';
-
 @Component({
   selector: 'app-reservations',
   standalone: true,
@@ -32,23 +31,12 @@ import { ViewMode } from '../../../shared/components/pageheaderviewswitcher.comp
           <app-page-header
             [viewMode]="viewMode()"
             (viewModeChange)="viewMode.set($event)"
+            actionButtonText="New Booking"
+            actionButtonIcon="pi-calendar-plus"
+            (actionButtonTriggered)="openStepperDrawer()"
           >
           </app-page-header>
         <!-- Page Header ends -->
-        
-        <!-- Right: Actions & Toggles -->
-        <div class="flex flex-wrap items-center gap-3">
-          
-          <!-- Kanban / List View Toggle -->
-          
-
-          <!-- Add Booking CTA Stepper Drawer -->
-          <button 
-            (click)="openStepperDrawer()"
-            class="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-2xl text-xs font-bold transition-all shadow-sm flex items-center gap-1.5">
-            <i class="pi pi-calendar-plus"></i> New Booking
-          </button>
-        </div>
 
       </div>
 
