@@ -2,7 +2,7 @@ import { Component, output, input } from '@angular/core';
 import { PageHeaderSearchInput } from './pageheadersearchinput.component';
 import { PageHeaderViewSwitcher } from './pageheaderviewswitcher.component';
 import { ViewMode } from './pageheaderviewswitcher.component';
-import { ActionButton } from '../ui/buttons/action-button/action-button.component';
+import { ActionButton } from '../ui/buttons/action-button.component';
 @Component({
   selector: 'app-page-header',
   imports: [

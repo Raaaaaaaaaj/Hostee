@@ -1,5 +1,5 @@
 import { Component, inject} from '@angular/core';
-import { Theme } from '../../../../core/services/theme.service';
+import { Theme } from '../../../core/services/theme.service';
 import { ButtonModule } from 'primeng/button';
 @Component({
   selector: 'app-toggle-theme-button',

@@ -7,6 +7,8 @@ import { StatusBadgeComponent } from '../../shared/components/status-badge.compo
 import { PremiumTableComponent } from '../../shared/components/premium-table.component';
 import { InputTextModule } from 'primeng/inputtext';
 import { DrawerModule } from 'primeng/drawer';
+import { PageHeader } from '../../shared/components/pageheader.component';
+import { ViewMode } from '../../shared/components/pageheaderviewswitcher.component';
 
 @Component({
   selector: 'app-rooms',
@@ -17,7 +19,8 @@ import { DrawerModule } from 'primeng/drawer';
     StatusBadgeComponent,
     PremiumTableComponent,
     InputTextModule,
-    DrawerModule
+    DrawerModule,
+    PageHeader
   ],
   template: `
     <div class="flex flex-col gap-8 font-sans">
@@ -25,65 +28,13 @@ import { DrawerModule } from 'primeng/drawer';
       <!-- Top Filters Banner -->
       <div class="bg-white border border-slate-100 p-6 rounded-3xl shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-4">
         
-        <!-- Search Input -->
-        <div class="relative w-full md:max-w-xs">
-          <i class="pi pi-search absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 text-sm"></i>
-          <input 
-            pInputText 
-            type="text" 
-            [(ngModel)]="searchQuery" 
-            placeholder="Search room number or type..." 
-            class="pl-10 w-full text-xs font-medium" 
-          />
-        </div>
-
-        <!-- Filter Selects -->
-        <div class="flex flex-wrap items-center gap-3">
-          
-          <!-- View Toggle -->
-          <div class="bg-slate-100 border border-slate-200/50 rounded-xl p-1 flex items-center gap-1.5 shadow-inner">
-            <button 
-              (click)="viewMode.set('card')"
-              class="w-8 h-8 rounded-lg flex items-center justify-center transition-all text-xs"
-              [ngClass]="viewMode() === 'card' ? 'bg-white text-slate-800 font-extrabold shadow-sm' : 'text-slate-400 hover:text-slate-600'">
-              <i class="pi pi-th-large"></i>
-            </button>
-            <button 
-              (click)="viewMode.set('table')"
-              class="w-8 h-8 rounded-lg flex items-center justify-center transition-all text-xs"
-              [ngClass]="viewMode() === 'table' ? 'bg-white text-slate-800 font-extrabold shadow-sm' : 'text-slate-400 hover:text-slate-600'">
-              <i class="pi pi-list"></i>
-            </button>
-          </div>
-
-          <!-- Status Filter -->
-          <select 
-            [(ngModel)]="filterStatus"
-            class="bg-slate-50 border border-slate-200 text-xs font-semibold px-3 py-2 rounded-xl text-slate-600 outline-none focus:border-indigo-500">
-            <option value="all">All Statuses</option>
-            <option value="vacant">Vacant</option>
-            <option value="occupied">Occupied</option>
-            <option value="dirty">Dirty</option>
-            <option value="reserved">Reserved</option>
-            <option value="maintenance">Maintenance</option>
-          </select>
-
-          <!-- Type Filter -->
-          <select 
-            [(ngModel)]="filterType"
-            class="bg-slate-50 border border-slate-200 text-xs font-semibold px-3 py-2 rounded-xl text-slate-600 outline-none focus:border-indigo-500">
-            @for (type of roomsStore.roomTypes(); track type) {
-              <option [value]="type">{{ type === 'all' ? 'All Suite Types' : type }}</option>
-            }
-          </select>
-
-          <!-- New Room Trigger -->
-          <button 
-            (click)="openCreateDrawer()"
-            class="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-2xl text-xs font-bold transition-all shadow-sm flex items-center gap-1.5">
-            <i class="pi pi-plus"></i> Add Room
-          </button>
-        </div>
+        <app-page-header
+          [viewMode]="viewMode()"
+          (viewModeChange)="viewMode.set($event)"
+          actionButtonText="Add Room"
+          actionButtonIcon="pi-plus"
+          (actionButtonTriggered)="openCreateDrawer()"
+        ></app-page-header>
 
       </div>
 
@@ -335,7 +286,7 @@ import { DrawerModule } from 'primeng/drawer';
 export class RoomsComponent {
   readonly roomsStore = inject(RoomsStore);
 
-  readonly viewMode = signal<'card' | 'table'>('card');
+  readonly viewMode = signal<ViewMode>('card');
   readonly drawerVisible = signal(false);
   readonly createDrawerVisible = signal(false);
   readonly selectedRoom = signal<Room | null>(null);

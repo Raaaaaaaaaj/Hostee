@@ -1,7 +1,7 @@
 import { Component, input, output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-export type ViewMode = 'kanban' | 'list' | 'calender';
+export type ViewMode = 'kanban' | 'list' | 'calender' | 'card';
 
 @Component({
   selector: 'app-page-header-view-switcher',
