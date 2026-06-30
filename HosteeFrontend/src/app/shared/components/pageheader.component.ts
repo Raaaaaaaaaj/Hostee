@@ -1,38 +1,28 @@
-import { Component, output, input } from '@angular/core';
-import { PageHeaderSearchInput } from './pageheadersearchinput.component';
-import { PageHeaderViewSwitcher } from './pageheaderviewswitcher.component';
-import { ViewMode } from './pageheaderviewswitcher.component';
-import { ActionButton } from '../ui/buttons/action-button.component';
+import { Component } from '@angular/core';
 @Component({
   selector: 'app-page-header',
-  imports: [
-    PageHeaderSearchInput, 
-    PageHeaderViewSwitcher, 
-    ActionButton
-  ],
+  imports: [],
   template: `
-    <div class="flex flex-wrap items-center gap-3">
-      <app-page-header-search-input></app-page-header-search-input>
-      <app-page-header-view-switcher
-        [viewMode]="viewMode()"
-        (viewModeChange)="viewModeChange.emit($event)"
-      >
-      </app-page-header-view-switcher>
-      <app-action-button
-        [text] = "actionButtonText()"
-        [icon] = "actionButtonIcon()"
-        (buttonClicked) = "actionButtonTriggered.emit()"
-      ></app-action-button>
-      
+    <div class="flex flex-wrap items-center justify-between gap-4">
+
+      <!-- Left -->
+      <div class="flex-1">
+        <ng-content select="[header-left]"></ng-content>
+      </div>
+
+      <!-- Center -->
+      <div class="flex items-center justify-center">
+        <ng-content select="[header-center]"></ng-content>
+      </div>
+
+      <!-- Right -->
+      <div class="flex items-center">
+        <ng-content select="[header-right]"></ng-content>
+      </div>
+
     </div>
   `,
   styles: ``,
 })
 export class PageHeader {
-  viewMode = input.required<ViewMode>()
-  viewModeChange = output<ViewMode>()
-
-  actionButtonText = input.required<string>()
-  actionButtonIcon = input<string>('')
-  actionButtonTriggered = output<void>()
 }

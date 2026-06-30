@@ -7,7 +7,8 @@ import { MenuModule } from 'primeng/menu';
 import { MenuItem } from 'primeng/api';
 import { DrawerModule } from 'primeng/drawer';
 import { AIDrawer } from "../../core/services/aiDrawer.service";
-import { ToggleThemeButton } from "../ui/buttons/toggle-theme-button/toggle-theme-button.component";
+// import { ToggleThemeButton } from "../ui/buttons/toggle-theme-button/toggle-theme-button.component";
+import { ToggleThemeButton } from "../ui/buttons/toggle-theme-button.component";
 
 @Component({
     selector: 'app-topbar',

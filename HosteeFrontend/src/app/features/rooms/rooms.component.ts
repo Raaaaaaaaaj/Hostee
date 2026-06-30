@@ -9,7 +9,10 @@ import { InputTextModule } from 'primeng/inputtext';
 import { DrawerModule } from 'primeng/drawer';
 import { PageHeader } from '../../shared/components/pageheader.component';
 import { ViewMode } from '../../shared/components/pageheaderviewswitcher.component';
-
+import { PageHeaderSearchInput } from '../../shared/components/pageheadersearchinput.component';
+import { PageHeaderViewSwitcher } from '../../shared/components/pageheaderviewswitcher.component';
+import { ActionButton } from '../../shared/ui/buttons/action-button.component';
+import { SelectDropdown } from '../../shared/ui/select-dropdown/select-dropdown';
 @Component({
   selector: 'app-rooms',
   standalone: true,
@@ -20,7 +23,11 @@ import { ViewMode } from '../../shared/components/pageheaderviewswitcher.compone
     PremiumTableComponent,
     InputTextModule,
     DrawerModule,
-    PageHeader
+    PageHeader,
+    PageHeaderSearchInput,
+    PageHeaderViewSwitcher,
+    ActionButton,
+    SelectDropdown
   ],
   template: `
     <div class="flex flex-col gap-8 font-sans">
@@ -28,13 +35,37 @@ import { ViewMode } from '../../shared/components/pageheaderviewswitcher.compone
       <!-- Top Filters Banner -->
       <div class="bg-white border border-slate-100 p-6 rounded-3xl shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-4">
         
-        <app-page-header
-          [viewMode]="viewMode()"
-          (viewModeChange)="viewMode.set($event)"
-          actionButtonText="Add Room"
-          actionButtonIcon="pi-plus"
-          (actionButtonTriggered)="openCreateDrawer()"
-        ></app-page-header>
+        <!-- Page Header -->
+        <app-page-header>
+          <!-- Left -->
+          <app-page-header-search-input header-left></app-page-header-search-input>
+
+          <!-- Center -->
+          <div header-center>
+            <app-page-header-view-switcher
+              [viewMode]="viewMode()"
+              (viewModeChange)="viewMode.set($event)"
+            ></app-page-header-view-switcher>
+          </div>
+
+          <!-- Right -->
+          <div class="flex flex-wrap gap-3" header-right>
+
+            <app-action-button
+              text="Add Room"
+              icon="pi-plus"
+              (buttonClicked)="openCreateDrawer()"
+            ></app-action-button>
+
+            <app-select-dropdown
+              placeholder="Select Status"
+            ></app-select-dropdown>
+            <app-select-dropdown
+              placeholder="Select Suite"
+            ></app-select-dropdown>
+          </div>
+        </app-page-header>
+        <!-- Page Header ends -->
 
       </div>
 

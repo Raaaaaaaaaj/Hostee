@@ -5,7 +5,12 @@ import { GuestsStore } from '../../core/store/guests.store';
 import { Guest } from '../../core/api/api.types';
 import { DrawerModule } from 'primeng/drawer';
 import { InputTextModule } from 'primeng/inputtext';
-
+import { PageHeader } from '../../shared/components/pageheader.component';
+import { PageHeaderSearchInput } from '../../shared/components/pageheadersearchinput.component';
+import { PageHeaderViewSwitcher } from '../../shared/components/pageheaderviewswitcher.component';
+import { ViewMode } from '../../shared/components/pageheaderviewswitcher.component';
+import { SelectDropdown } from '../../shared/ui/select-dropdown/select-dropdown';
+import { ActionButton } from '../../shared/ui/buttons/action-button.component';
 @Component({
   selector: 'app-guests',
   standalone: true,
@@ -13,51 +18,49 @@ import { InputTextModule } from 'primeng/inputtext';
     CommonModule,
     FormsModule,
     DrawerModule,
-    InputTextModule
+    InputTextModule,
+    PageHeader,
+    PageHeaderSearchInput,
+    PageHeaderViewSwitcher,
+    SelectDropdown,
+    ActionButton
   ],
   template: `
     <div class="flex flex-col gap-8 font-sans">
       
       <!-- Top Filters Banner -->
       <div class="bg-white border border-slate-100 p-6 rounded-3xl shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-4">
-        
-        <!-- Search bar -->
-        <div class="relative w-full md:max-w-xs">
-          <i class="pi pi-search absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 text-sm"></i>
-          <input 
-            pInputText 
-            type="text" 
-            [(ngModel)]="searchQuery" 
-            placeholder="Search CRM guest name or contact..." 
-            class="pl-10 w-full text-xs font-medium" 
-          />
-        </div>
+        <app-page-header>
+          <!-- Left -->
+          <app-page-header-search-input header-left></app-page-header-search-input>
 
-        <!-- Filter Selects -->
-        <div class="flex flex-wrap items-center gap-3">
-          
-          <!-- Loyalty Tier Select -->
-          <select 
-            [(ngModel)]="filterTier"
-            class="bg-slate-50 border border-slate-200 text-xs font-semibold px-3 py-2 rounded-xl text-slate-600 outline-none focus:border-indigo-500">
-            <option value="all">All Loyalty Tiers</option>
-            <option value="none">Standard tier</option>
-            <option value="silver">Silver Tier</option>
-            <option value="gold">Gold Elite</option>
-            <option value="platinum">Platinum Royal</option>
-          </select>
+          <!-- Center -->
+          <div header-center>
+            <app-page-header-view-switcher
+              [viewMode]="viewMode()"
+              (viewModeChange)="viewMode.set($event)"
+            ></app-page-header-view-switcher>
+          </div>
 
-          <!-- Register Guest CTA Drawer -->
-          <button 
-            (click)="openRegisterDrawer()"
-            class="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-2xl text-xs font-bold transition-all shadow-sm flex items-center gap-1.5">
-            <i class="pi pi-user-plus"></i> Register Guest
-          </button>
-        </div>
+          <!-- Right -->
+          <div class="flex flex-wrap gap-3" header-right>
 
+            <app-select-dropdown
+              placeholder="All Loyalty Tiers"
+            ></app-select-dropdown>
+
+            <app-action-button
+              text="Register Guest"
+              icon="pi-address-book"
+              (buttonClicked)="openRegisterDrawer()"
+            ></app-action-button>
+
+          </div>
+        </app-page-header>
       </div>
 
       <!-- Guests Grid Catalog -->
+      @if(viewMode()==="card"){
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         @for (guest of guestsStore.filteredGuests(); track guest.id) {
           <div 
@@ -112,6 +115,7 @@ import { InputTextModule } from 'primeng/inputtext';
           </div>
         }
       </div>
+      }
 
       <!-- Guests CRM Inspector Side Drawer (Avoiding annoying alert modals!) -->
       <p-drawer 
@@ -286,6 +290,7 @@ import { InputTextModule } from 'primeng/inputtext';
 export class GuestsComponent {
   readonly guestsStore = inject(GuestsStore);
 
+  readonly viewMode = signal<ViewMode>('card') 
   readonly drawerVisible = signal(false);
   readonly registerDrawerVisible = signal(false);
   readonly selectedGuest = signal<Guest | null>(null);

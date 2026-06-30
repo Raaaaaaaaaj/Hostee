@@ -7,13 +7,13 @@ import { InputTextModule } from 'primeng/inputtext';
   selector: 'app-page-header-search-input',
   imports: [FormsModule, InputTextModule],
   template: `
-        <div class="relative w-full">
+        <div class="relative w-50">
           <i class="pi pi-search absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 text-sm"></i>
           <input 
             pInputText 
             type="text" 
             [(ngModel)]="searchQuery" 
-            placeholder="Guest name or room" 
+            placeholder="Search" 
             class="pl-10 w-full text-xs font-medium right-7" 
           />
         </div>

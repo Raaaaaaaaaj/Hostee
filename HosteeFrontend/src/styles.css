@@ -157,10 +157,10 @@ body {
   background: var(--bg-card) !important;
   color: var(--text-main) !important;
   border-radius: 14px !important;
-  padding: 0.75rem 1rem !important;
+  /* padding: 0.75rem 1rem !important; */
   border: 1px solid var(--border-subtle) !important;
   transition: all 0.2s ease !important;
-  font-family: var(--font-sans) !important;
+  /* font-family: var(--font-sans) !important; */
 }
 
 .p-inputtext:focus {
@@ -199,6 +199,10 @@ body {
 
 .p-button-secondary:hover {
   background: var(--bg-secondary-btn-hover) !important;
+}
+.p-select-label{
+  font-size: 0.78rem !important;
+  padding: 10px 13px !important;
 }
 
 /* ==========================================================================
