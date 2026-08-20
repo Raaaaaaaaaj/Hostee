@@ -3,6 +3,7 @@
 // 1. Data Source: Tells Prisma how to connect to your database
 datasource db {
   provider = "postgresql" // Options: mysql, sqlite, sqlserver, mongodb, cockroachdb
+  url = env(DATABASE_URL)
 }
 
 // 2. Generator: Tells Prisma to generate the type-safe client for TypeScript
