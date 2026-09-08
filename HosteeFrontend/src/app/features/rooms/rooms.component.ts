@@ -137,23 +137,17 @@ import { SelectDropdown } from '../../shared/ui/select-dropdown/select-dropdown'
         [(visible)]="drawerVisible" 
         position="right" 
         [modal]="true"
-        styleClass="w-full max-w-lg p-0 bg-white">
+        styleClass="!w-full !max-w-xl p-0 bg-white">
         
         @if (selectedRoom(); as room) {
           <div class="h-full flex flex-col justify-between font-sans">
             
             <!-- Drawer Header -->
-            <div class="p-6 border-b border-slate-50 flex justify-between items-center bg-slate-50/50">
+            <div class="p-6 border-b border-slate-50 flex justify-between rounded-2xl items-center bg-slate-50/50">
               <div>
                 <span class="text-xs uppercase font-extrabold text-indigo-500 tracking-wider">Room Inspector</span>
                 <h3 class="text-lg font-black text-slate-800 mt-0.5">Suite {{ room.number }} Overview</h3>
               </div>
-              <button 
-                (click)="drawerVisible.set(false)"
-                class="w-8 h-8 rounded-xl hover:bg-slate-100 flex items-center justify-center text-slate-400"
-                title="Dismiss">
-                <i class="pi pi-times text-xs"></i>
-              </button>
             </div>
 
             <!-- Drawer Content (Structured forms & amenities) -->
@@ -254,15 +248,14 @@ import { SelectDropdown } from '../../shared/ui/select-dropdown/select-dropdown'
         [(visible)]="createDrawerVisible" 
         position="right" 
         [modal]="true"
-        styleClass="w-full max-w-lg p-0 bg-white">
+        styleClass="!w-full !max-w-xl p-0 bg-white">
         
         <div class="h-full flex flex-col justify-between font-sans">
-          <div class="p-6 border-b border-slate-50 flex justify-between items-center bg-slate-50/50">
+          <div class="p-6 border-b border-slate-50 flex rounded-2xl justify-between items-center bg-slate-50/50">
             <div>
               <span class="text-xs uppercase font-extrabold text-indigo-500 tracking-wider">Inventory Entry</span>
               <h3 class="text-lg font-black text-slate-800 mt-0.5">Register New Suite</h3>
             </div>
-            <button (click)="createDrawerVisible.set(false)" class="w-8 h-8 rounded-xl hover:bg-slate-100 flex items-center justify-center text-slate-400" title="Dismiss"><i class="pi pi-times text-xs"></i></button>
           </div>
 
           <div class="flex-1 overflow-y-auto p-6 flex flex-col gap-4">
