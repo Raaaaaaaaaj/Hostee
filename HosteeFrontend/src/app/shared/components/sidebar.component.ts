@@ -22,11 +22,6 @@ import { AIDrawer } from '../../core/services/aiDrawer.service';
         <div class="flex items-center justify-between py-3 px-4">
         
         <div class="flex items-center gap-3 border-b border-[#111A2E]/30">
-          <!-- <div
-            class="w-10 h-10 rounded-2xl bg-indigo-600 flex items-center justify-center shadow-lg shadow-indigo-600/30 grow-0 shrink-0"
-          >
-            <i class="pi pi-building text-base text-white"></i>
-          </div> -->
           @if (!sidebarCollapsed()) {
             <div class="flex flex-col">
               <span class="text-sm font-extrabold tracking-tight font-sans">Hostee</span>
@@ -121,14 +116,13 @@ import { AIDrawer } from '../../core/services/aiDrawer.service';
 })
 export class Sidebar {
   readonly sidebarCollapsed = signal(false);
-  // readonly aiSidebarVisible = signal(false);
   protected readonly aidrawerService = inject(AIDrawer)
-
   readonly authService = inject(AuthService);
 
   readonly navigationItems = signal<
     Array<{ label: string; icon: string; route: string; exact?: boolean; roles?: string[] }>
   >([
+    { label: 'Super Admin', icon: 'pi pi-shield', route: '/superadmin' },
     { label: 'Dashboard', icon: 'pi pi-chart-bar', route: '/dashboard', exact: true },
     { label: 'Reservations', icon: 'pi pi-calendar', route: '/reservations' },
     { label: 'Rooms', icon: 'pi pi-building', route: '/rooms' },

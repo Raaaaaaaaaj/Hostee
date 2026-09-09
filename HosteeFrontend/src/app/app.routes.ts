@@ -7,10 +7,18 @@ export const routes: Routes = [
     loadComponent: () => import('./features/auth/login/login.component').then(m => m.LoginComponent)
   },
   {
+    path: 'superadmin',
+    loadComponent: () => import('./features/super-admin/super-admin.component').then(m => m.SuperAdminComponent)
+  },
+  {
     path: '',
     loadComponent: () => import('./core/layouts/main-layout.component').then(m => m.MainLayoutComponent),
     canActivate: [authGuard],
     children: [
+      {
+        path: 'superadmin',
+        loadComponent: () => import('./features/super-admin/super-admin.component').then(m => m.SuperAdminComponent)
+      },
       {
         path: 'dashboard',
         loadComponent: () => import('./features/dashboard/dashboard.component').then(m => m.DashboardComponent)

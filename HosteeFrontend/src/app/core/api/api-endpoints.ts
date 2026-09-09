@@ -4,6 +4,13 @@ export const API_ENDPOINTS = {
     LOGOUT: '/auth/logout',
     ME: '/auth/me'
   },
+  TENANTS: {
+    GET_ALL: '/tenants',
+    CREATE: '/tenants',
+    GET_BY_SLUG: (slug: string) => `/tenants/${slug}`,
+    UPDATE: (id: string) => `/tenants/${id}`,
+    DELETE: (id: string) => `/tenants/${id}`
+  },
   ROOMS: {
     GET_ALL: '/rooms',
     GET_BY_ID: (id: string) => `/rooms/${id}`,

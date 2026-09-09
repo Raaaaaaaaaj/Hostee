@@ -1,39 +1,68 @@
-// Get a free hosted Postgres database: `npx create-db`
-
-// 1. Data Source: Tells Prisma how to connect to your database
+// Data Source: Connection to PostgreSQL database
 datasource db {
-  provider = "postgresql" // Options: mysql, sqlite, sqlserver, mongodb, cockroachdb
-  url = env(DATABASE_URL)
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
 }
 
-// 2. Generator: Tells Prisma to generate the type-safe client for TypeScript
+// Generator: Generates Prisma Client for TypeScript
 generator client {
   provider = "prisma-client-js"
 }
-
 
 // ---------------------------------
 // Enums (Types)
 // ---------------------------------
 
 enum Role {
-  ADMIN
+  SUPER_ADMIN
+  HOTEL_ADMIN
   MANAGER
   RECEPTIONIST
   CLEANER
 }
 
+enum TenantStatus {
+  ACTIVE
+  SUSPENDED
+  INACTIVE
+}
+
+enum SubscriptionTier {
+  FREE
+  BASIC
+  PREMIUM
+  ENTERPRISE
+}
 
 // ---------------------------------
 // Models (Tables)
 // ---------------------------------
 
+// Master Tenant Model (Represents a Hotel / Client Organization)
+model Tenant {
+  id               String           @id @default(uuid())
+  name             String
+  slug             String           @unique // e.g. "hotel1", "grand-view"
+  customDomain     String?          @unique
+  status           TenantStatus     @default(ACTIVE)
+  subscriptionTier SubscriptionTier @default(FREE)
+  users            User[]
+  createdAt        DateTime         @default(now())
+  updatedAt        DateTime         @updatedAt
+}
+
+// User Model (Scoped to a Tenant or Platform Super Admin)
 model User {
-  id String @id @default(uuid())
-  email String @unique
-  password String
-  name String 
-  role Role @default(ADMIN)
+  id        String   @id @default(uuid())
+  tenantId  String?  // Nullable for Super Admins
+  tenant    Tenant?  @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  email     String   @unique
+  password  String
+  name      String
+  role      Role     @default(HOTEL_ADMIN)
+  isActive  Boolean  @default(true)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  @@index([tenantId])
 }

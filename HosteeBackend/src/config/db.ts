@@ -1,4 +1,4 @@
-import { PrismaClient } from "@prisma/client/extension";
+import { PrismaClient } from "@prisma/client";
 
 // This code sets up a PrismaClient instance for database interactions.This approach helps prevent multiple instances of PrismaClient during development, which can lead to issues with database connections.
 const globalForPrisma = global as unknown as {prisma: PrismaClient};

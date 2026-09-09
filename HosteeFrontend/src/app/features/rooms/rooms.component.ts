@@ -251,7 +251,7 @@ import { SelectDropdown } from '../../shared/ui/select-dropdown/select-dropdown'
         styleClass="!w-full !max-w-xl p-0 bg-white">
         
         <div class="h-full flex flex-col justify-between font-sans">
-          <div class="p-6 border-b border-slate-50 flex rounded-2xl justify-between items-center bg-slate-50/50">
+          <div class="p-6 border-b border-slate-50 flex rounded-2xl justify-between items-center bg-slate-100">
             <div>
               <span class="text-xs uppercase font-extrabold text-indigo-500 tracking-wider">Inventory Entry</span>
               <h3 class="text-lg font-black text-slate-800 mt-0.5">Register New Suite</h3>
